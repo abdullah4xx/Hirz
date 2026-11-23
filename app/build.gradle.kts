@@ -50,15 +50,13 @@ android {
 
     flavorDimensions += "channel"
     productFlavors {
-        create("main") {
+        create("prod") {
             dimension = "channel"
             applicationId = "hirz.codx.app"
-            resValue("string", "app_name", "Hirz")
         }
         create("dev") {
             dimension = "channel"
             applicationId = "hirz.codx.app.dev"
-            resValue("string", "app_name", "Hirz Dev")
         }
     }
 
