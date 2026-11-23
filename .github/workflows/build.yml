@@ -30,16 +30,20 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: ''
 
       - name: Install Android components
-        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+        run: |
+          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          yes | sdkmanager --licenses || true
 
       - name: Decode keystore
         if: ${{ env.HIRZ_STORE_PASSWORD != '' }}
         run: |
           echo "${{ secrets.HIRZ_KEYSTORE_BASE64 }}" | base64 -d > hirz-release.jks
 
-      - name: Gradle cache
+      - name: Gradle setup
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build main debug
