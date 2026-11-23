@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HIRZ_STORE_FILE: hirz-release.jks
+      HIRZ_STORE_PASSWORD: ${{ secrets.HIRZ_STORE_PASSWORD }}
+      HIRZ_KEY_ALIAS: ${{ secrets.HIRZ_KEY_ALIAS }}
+      HIRZ_KEY_PASSWORD: ${{ secrets.HIRZ_KEY_PASSWORD }}
+      HIRZ_VERSION_NAME: ${{ github.ref_type == 'tag' && github.ref_name || format('0.1.0-dev.{0}', github.run_number) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android components
+        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Decode keystore
+        if: ${{ env.HIRZ_STORE_PASSWORD != '' }}
+        run: |
+          echo "${{ secrets.HIRZ_KEYSTORE_BASE64 }}" | base64 -d > hirz-release.jks
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build main debug
+        run: ./gradlew :app:assembleMainDebug
+
+      - name: Build dev debug
+        run: ./gradlew :app:assembleDevDebug
+
+      - name: Build main release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: ./gradlew :app:assembleMainRelease
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: hirz-apks-${{ github.run_number }}
+          path: |
+            app/build/outputs/apk/**/*.apk
