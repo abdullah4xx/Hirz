@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 @Database(
     entities = [
@@ -18,6 +19,7 @@ import androidx.room.RoomDatabase
     version = 1,
     exportSchema = true
 )
+@TypeConverters(Converters::class)
 abstract class HirzDatabase : RoomDatabase() {
     abstract fun items(): ItemDao
     abstract fun albums(): AlbumDao
@@ -35,7 +37,6 @@ abstract class HirzDatabase : RoomDatabase() {
                 "hirz.db"
             )
                 .openHelperFactory(null) // plaintext DB file but sensitive columns are encrypted
-                .fallbackToDestructiveMigrationOnDowngrade()
                 .build()
                 .also { instance = it }
         }

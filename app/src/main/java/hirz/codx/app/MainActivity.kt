@@ -28,7 +28,9 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import hirz.codx.app.crypto.HirzVault
+import hirz.codx.app.ui.home.HomeScreen
 import hirz.codx.app.ui.lock.LockScreen
+import hirz.codx.app.ui.settings.SettingsScreen
 import hirz.codx.app.ui.setup.SetupFlow
 import hirz.codx.app.ui.theme.HirzTheme
 
@@ -46,7 +48,7 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!BuildConfig.DEBUG) {
+        if (BuildConfig.FLAVOR == "prod") {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE
@@ -110,32 +112,20 @@ private fun HirzApp(vault: HirzVault, activity: FragmentActivity) {
             onUnlocked = { vault.refresh() }
         )
 
-        else -> UnlockedPlaceholder(onLock = { vault.lock() })
+        else -> HirzHome(vault = vault)
     }
 }
 
 @Composable
-private fun UnlockedPlaceholder(onLock: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(R.string.app_name),
-            style = MaterialTheme.typography.headlineLarge,
-            textAlign = TextAlign.Center
+private fun HirzHome(vault: HirzVault) {
+    var showSettings by remember { mutableStateOf(false) }
+    if (showSettings) {
+        SettingsScreen(onBack = { showSettings = false }, onLock = { vault.lock() })
+    } else {
+        HomeScreen(
+            vault = vault,
+            onOpenSettings = { showSettings = true },
+            onAdd = { /* import flow wired in Phase 3 */ }
         )
-        Text(
-            text = stringResource(R.string.vault_unlocked_placeholder),
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 12.dp)
-        )
-        androidx.compose.material3.TextButton(onClick = onLock, modifier = Modifier.padding(top = 24.dp)) {
-            Text(stringResource(R.string.action_lock))
-        }
     }
 }

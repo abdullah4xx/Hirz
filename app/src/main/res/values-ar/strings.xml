@@ -61,4 +61,20 @@
     <string name="error_generic">حدث خطأ. حاول مرة أخرى.</string>
     <string name="vault_unlocked_placeholder">الخزنة مفتوحة. المرحلة 1 تغطي الإعداد والقفل والفتح فقط. الملفات تيجي في المراحل الجاية.</string>
     <string name="action_lock">قفل</string>
+    <string name="action_settings">الإعدادات</string>
+    <string name="action_add">إضافة</string>
+    <string name="tab_photos">الصور</string>
+    <string name="tab_videos">الفيديوهات</string>
+    <string name="tab_audio">الصوتيات</string>
+    <string name="tab_files">الملفات</string>
+    <string name="empty_tab_hint">لا يوجد عناصر بعد. اضغط + للإضافة.</string>
+    <string name="settings_lock_now">اقفل الخزنة الآن</string>
+    <string name="settings_recents_title">شاشة التطبيقات الأخيرة</string>
+    <string name="settings_recents_blank">فارغة (افتراضي)</string>
+    <string name="settings_language_title">اللغة</string>
+    <string name="settings_language_system">لغة الجهاز</string>
+    <string name="settings_icon_title">أيقونة التطبيق</string>
+    <string name="settings_icon_default">الدرع (افتراضي)</string>
+    <string name="settings_backup_title">النسخ الاحتياطي</string>
+    <string name="settings_backup_not_configured">غير مضبوط</string>
 </resources>
