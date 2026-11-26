@@ -1,5 +1,64 @@
 <resources>
     <string name="app_name">حِرز</string>
-    <string name="phase0_title">حِرز</string>
-    <string name="phase0_subtitle">خزنة خاصة مشفرة — الإعداد جاري</string>
+
+    <!-- Setup -->
+    <string name="setup_welcome_title">أهلاً بك في حِرز</string>
+    <string name="setup_welcome_body">صورك وفيديوهاتك وصوتياتك وملفاتك تبقى مشفّرة داخل التطبيق. لا شيء يخرج من الموبايل، والتطبيق لا يملك أي اتصال بالإنترنت.</string>
+    <string name="setup_welcome_start">أنشئ خزنتي</string>
+
+    <string name="setup_pin_title">اختر رمز الدخول</string>
+    <string name="setup_pin_body">من 4 إلى 12 رقمًا.</string>
+    <string name="setup_pin_warning">تنبيه: الرمز المكوّن من 4 أرقام له 10,000 احتمال فقط. من يمسك هاتفك المفتوح ويستخدم أداة آلية قد يجرّبها كلها في نحو ساعة. الرمز الأطول أكثر أمانًا بكثير. حِرز لا يضيف أي تأخير أو قفل بعد المحاولات الخاطئة، كما طلبت بالضبط.</string>
+    <string name="setup_pin_confirm_title">أكّد رمز الدخول</string>
+    <string name="setup_pin_mismatch">الرمزان غير متطابقين. حاول مرة أخرى.</string>
+    <string name="setup_pin_too_short">الرمز يجب أن يكون 4 أرقام على الأقل.</string>
+
+    <string name="setup_bio_title">بصمة الإصبع</string>
+    <string name="setup_bio_body">افتح الخزنة ببصمة إصبعك. البصمة لا تخرج من الهاتف ولا يستطيع حِرز قراءتها.</string>
+    <string name="setup_bio_enable">تفعيل البصمة</string>
+    <string name="setup_bio_skip">ليس الآن</string>
+
+    <string name="setup_recovery_title">مفتاح الاسترجاع</string>
+    <string name="setup_recovery_body">هذا المفتاح هو طريقك الوحيد للعودة إلى خزنتك إذا نسيت الرمز أو أعدت تثبيت التطبيق. اكتبه على ورقة واحفظه في مكان آمن. يظهر مرة واحدة فقط وحِرز لا يحفظه.</string>
+    <string name="setup_recovery_copy">نسخ</string>
+    <string name="setup_recovery_share">مشاركة</string>
+    <string name="setup_recovery_continue">حفظت المفتاح</string>
+
+    <string name="setup_recovery_confirm_title">تأكيد المفتاح</string>
+    <string name="setup_recovery_confirm_body">اكتب المجموعتين التاليتين كما هما بالضبط.</string>
+    <string name="setup_recovery_confirm_error">المفتاح غير مطابق. راجع ما كتبته.</string>
+
+    <string name="setup_done_title">خزنتك جاهزة</string>
+    <string name="setup_done_body">اضبط استهلاك البطارية لحِرز على «غير مقيّد» حتى لا يوقف النظام الاستيراد والنسخ الاحتياطي في الخلفية.</string>
+    <string name="setup_done_open_settings">فتح إعدادات البطارية</string>
+    <string name="setup_done_finish">ابدأ استخدام حِرز</string>
+
+    <!-- Lock -->
+    <string name="lock_title">حِرز مقفول</string>
+    <string name="lock_enter_pin">أدخل رمز الدخول</string>
+    <string name="lock_wrong_pin">رمز خاطئ.</string>
+    <string name="lock_use_fingerprint">استخدم البصمة</string>
+    <string name="lock_forgot_pin">نسيت الرمز؟</string>
+    <string name="lock_unlock">فتح</string>
+    <string name="lock_biometric_prompt_title">فتح حِرز</string>
+    <string name="lock_biometric_prompt_subtitle">أكّد بصمة إصبعك</string>
+
+    <!-- Forgot PIN -->
+    <string name="forgot_title">مفتاح الاسترجاع</string>
+    <string name="forgot_body">أدخل مفتاح الاسترجاع. الشرطات اختيارية.</string>
+    <string name="forgot_wrong_key">مفتاح الاسترجاع غير صحيح.</string>
+    <string name="forgot_continue">متابعة</string>
+    <string name="forgot_new_pin_title">اختر رمزًا جديدًا</string>
+
+    <!-- Common -->
+    <string name="action_continue">متابعة</string>
+    <string name="action_back">رجوع</string>
+    <string name="action_cancel">إلغاء</string>
+    <string name="action_done">تم</string>
+    <string name="biometric_unavailable">البصمة غير متاحة على هذا الجهاز.</string>
+    <string name="biometric_failed">لم يتم التعرف على البصمة.</string>
+    <string name="biometric_key_invalid">تغيّرت بصماتك. افتح بالرمز ثم أعد تفعيل البصمة.</string>
+    <string name="error_generic">حدث خطأ. حاول مرة أخرى.</string>
+    <string name="vault_unlocked_placeholder">الخزنة مفتوحة. المرحلة 1 تغطي الإعداد والقفل والفتح فقط. الملفات تيجي في المراحل الجاية.</string>
+    <string name="action_lock">قفل</string>
 </resources>

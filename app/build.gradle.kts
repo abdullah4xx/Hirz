@@ -30,9 +30,14 @@ android {
         applicationId = "hirz.codx.app"
         minSdk = 30
         targetSdk = 35
-        val runNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
-        versionCode = runNumber
-        versionName = System.getenv("HIRZ_VERSION_NAME") ?: "0.1.0-dev.$runNumber"
+        val versionProps = Properties().apply {
+            rootProject.file("version.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+        }
+        val localCode = versionProps.getProperty("versionCode")?.toIntOrNull() ?: 1
+        val localName = versionProps.getProperty("versionName") ?: "0.1.0"
+        val runNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 0
+        versionCode = maxOf(localCode, runNumber)
+        versionName = System.getenv("HIRZ_VERSION_NAME") ?: localName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -107,6 +112,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.lifecycle.process)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.argon2kt)
+    implementation("androidx.compose.material:material-icons-extended")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,5 +1,64 @@
 <resources>
     <string name="app_name">Hirz</string>
-    <string name="phase0_title">Hirz</string>
-    <string name="phase0_subtitle">Private encrypted vault — setup in progress</string>
+
+    <!-- Setup -->
+    <string name="setup_welcome_title">Welcome to Hirz</string>
+    <string name="setup_welcome_body">Your photos, videos, audio and files stay encrypted inside this app. Nothing leaves the phone and the app has no internet access.</string>
+    <string name="setup_welcome_start">Create my vault</string>
+
+    <string name="setup_pin_title">Choose a PIN</string>
+    <string name="setup_pin_body">4 to 12 digits.</string>
+    <string name="setup_pin_warning">Note: a 4-digit PIN has only 10,000 combinations. Someone holding your unlocked phone with an automation tool could try them all in about an hour. A longer PIN is much safer. Hirz never adds delays or lockouts, exactly as you asked.</string>
+    <string name="setup_pin_confirm_title">Confirm the PIN</string>
+    <string name="setup_pin_mismatch">The two PINs do not match. Try again.</string>
+    <string name="setup_pin_too_short">The PIN must be at least 4 digits.</string>
+
+    <string name="setup_bio_title">Fingerprint</string>
+    <string name="setup_bio_body">Unlock with your fingerprint. Your fingerprint never leaves the phone and cannot be read by Hirz.</string>
+    <string name="setup_bio_enable">Enable fingerprint</string>
+    <string name="setup_bio_skip">Not now</string>
+
+    <string name="setup_recovery_title">Your recovery key</string>
+    <string name="setup_recovery_body">This key is the only way back into your vault if you forget the PIN or reinstall the app. Write it on paper and keep it somewhere safe. It is shown only once and Hirz does not store it.</string>
+    <string name="setup_recovery_copy">Copy</string>
+    <string name="setup_recovery_share">Share</string>
+    <string name="setup_recovery_continue">I saved the key</string>
+
+    <string name="setup_recovery_confirm_title">Confirm the key</string>
+    <string name="setup_recovery_confirm_body">Type the two groups below exactly as shown.</string>
+    <string name="setup_recovery_confirm_error">The key does not match. Check what you wrote down.</string>
+
+    <string name="setup_done_title">Your vault is ready</string>
+    <string name="setup_done_body">Set battery usage for Hirz to “Unrestricted” so imports and backups are not killed in the background.</string>
+    <string name="setup_done_open_settings">Open battery settings</string>
+    <string name="setup_done_finish">Start using Hirz</string>
+
+    <!-- Lock -->
+    <string name="lock_title">Hirz is locked</string>
+    <string name="lock_enter_pin">Enter your PIN</string>
+    <string name="lock_wrong_pin">Wrong PIN.</string>
+    <string name="lock_use_fingerprint">Use fingerprint</string>
+    <string name="lock_forgot_pin">Forgot PIN?</string>
+    <string name="lock_unlock">Unlock</string>
+    <string name="lock_biometric_prompt_title">Unlock Hirz</string>
+    <string name="lock_biometric_prompt_subtitle">Confirm your fingerprint</string>
+
+    <!-- Forgot PIN -->
+    <string name="forgot_title">Recovery key</string>
+    <string name="forgot_body">Enter your recovery key. The dashes are optional.</string>
+    <string name="forgot_wrong_key">This recovery key is not correct.</string>
+    <string name="forgot_continue">Continue</string>
+    <string name="forgot_new_pin_title">Choose a new PIN</string>
+
+    <!-- Common -->
+    <string name="action_continue">Continue</string>
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_done">Done</string>
+    <string name="biometric_unavailable">Fingerprint is not available on this device.</string>
+    <string name="biometric_failed">Fingerprint was not recognised.</string>
+    <string name="biometric_key_invalid">Your fingerprints changed. Please unlock with your PIN and re-enable the fingerprint.</string>
+    <string name="error_generic">Something went wrong. Try again.</string>
+    <string name="vault_unlocked_placeholder">The vault is unlocked. Phase 1 only covers setup, lock and unlock. Files come in the next phases.</string>
+    <string name="action_lock">Lock</string>
 </resources>
