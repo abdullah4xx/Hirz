@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -95,6 +96,11 @@ android {
         compose = true
         buildConfig = true
     }
+    ksp {
+        arg("room.incremental", "true")
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.generateKotlin", "true")
+    }
 
     packaging {
         resources {
@@ -116,6 +122,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.argon2kt)
+    implementation(libs.tink.android)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
     implementation("androidx.compose.material:material-icons-extended")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
