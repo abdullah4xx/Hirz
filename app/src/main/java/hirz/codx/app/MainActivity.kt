@@ -12,7 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+/* lifecycle locking handled in Activity */
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,15 +24,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import hirz.codx.app.crypto.HirzVault
 import hirz.codx.app.ui.lock.LockScreen
 import hirz.codx.app.ui.setup.SetupFlow
 import hirz.codx.app.ui.theme.HirzTheme
 
 class MainActivity : FragmentActivity() {
+
+    private val vault by lazy { HirzVault.get(applicationContext) }
+    private val screenOffReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: android.content.Context?, intent: android.content.Intent?) {
+            if (intent?.action == android.content.Intent.ACTION_SCREEN_OFF) {
+                vault.lock()
+            }
+        }
+    }
+    private var receiverRegistered = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!BuildConfig.DEBUG) {
@@ -42,7 +53,11 @@ class MainActivity : FragmentActivity() {
             )
         }
         enableEdgeToEdge()
-        val vault = HirzVault.get(applicationContext)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStop(owner: LifecycleOwner) {
+                if (vault.state.value.configured) vault.lock()
+            }
+        })
         setContent {
             HirzTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -51,23 +66,33 @@ class MainActivity : FragmentActivity() {
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (!receiverRegistered) {
+            registerReceiver(
+                screenOffReceiver,
+                android.content.IntentFilter(android.content.Intent.ACTION_SCREEN_OFF)
+            )
+            receiverRegistered = true
+        }
+    }
+
+    override fun onDestroy() {
+        if (receiverRegistered) {
+            unregisterReceiver(screenOffReceiver)
+            receiverRegistered = false
+        }
+        super.onDestroy()
+    }
 }
 
 @Composable
 private fun HirzApp(vault: HirzVault, activity: FragmentActivity) {
     val state by vault.state.collectAsState()
     var setupComplete by remember(state.configured) { mutableStateOf(state.configured) }
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    DisposableEffect(lifecycleOwner, state.configured) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_STOP && state.configured) {
-                vault.lock()
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-    }
+    // Locking is handled by ProcessLifecycleOwner in MainActivity to cover both app background
+    // and process-level transitions. No idle timer by design.
 
     when {
         !setupComplete -> SetupFlow(
